@@ -9,23 +9,26 @@
 	</head>
 	<body>
 		<div id="container">
-			<div id="score">Score: <span id="scoreValue">0</span></div>
+			<div id="score">Score: <span id="scoreValue">?</span></div>
 			<div id="correct">Correct</div>
 			<div id="incorrect">Try again</div>
-			<div id="question">7 x 9</div>
+			<div id="question">🤔</div>
 			<div id="instruction">Click on the correct answer!</div>
 			<div id="choices">
-				<div id="option-1" class="option-box"></div>
-				<div id="option-2" class="option-box"></div>
-				<div id="option-3" class="option-box"></div>
-				<div id="option-4" class="option-box"></div>
+				<div id="option1" class="option-box">🤔</div>
+				<div id="option2" class="option-box">🤔</div>
+				<div id="option3" class="option-box">🤔</div>
+				<div id="option4" class="option-box">🤔</div>
 			</div>
-			<div id="start-reset">Start Game</div>
-			<div id="time-remaining">Time Remaining : <span>60</span> sec</div>
-			<div id="game-over">
+			<div id="startReset">Start Game</div>
+			<div id="countdownBox">
+				Time Remaining : <span id="timeRemaining">?</span> sec(s)
+			</div>
+			<div id="gameOverBox">
 				<p>Game Over!</p>
-				<p>Your Score is <span>1</span>.</p>
+				<p>Your Score is <span id="finalScoreValue">?</span>.</p>
 			</div>
 		</div>
+		<script type="module" src="app.js"></script>
 	</body>
 </html>
