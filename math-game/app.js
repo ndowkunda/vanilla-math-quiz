@@ -1,9 +1,8 @@
 import questions from './questions.js'
 
 let isPlaying = false
+let score, currentQuestion = 0
 let action
-let score = 0
-let currentQuestion = 0
 let startResetButton = document.getElementById("startReset")
 let scoreValue = document.getElementById("scoreValue")
 let countdownBox = document.getElementById("countdownBox")
@@ -28,15 +27,17 @@ function checkAnswer(question) {
   choices.forEach(answer => {
     answer.addEventListener('click', () => {
       if (answer.innerHTML == question.answers[`${question.correctAnswer}`]) {
-        // TO FIX: timeout function currently doesnt clear correct status and takes second to appear!!!
-        setTimeout(() => { show(correct); hide(incorrect) }, 1000)
+        hide(incorrect)
+        show(correct)
+        setTimeout(() => { hide(correct) }, 1000)
         score++
         setElementValue(scoreValue, score)
         setNextQuestion()
       }
       else {
-        // TO FIX: timeout function currently doesnt clear incorrect status and takes a second to appear!!!
-        setTimeout(() => { show(incorrect) }, 1000)
+        hide(correct)
+        show(incorrect)
+        setTimeout(() => { hide(incorrect) }, 1000)
       }
     }, { once: true })
   })
@@ -44,6 +45,7 @@ function checkAnswer(question) {
 
 function setNextQuestion() {
   if (currentQuestion < questions.length - 1) {
+    console.log(currentQuestion)
     showQA(questions[++currentQuestion])
   }
   else {
@@ -86,28 +88,36 @@ function stopCountdown() {
   clearInterval(action)
 }
 
-//TO DO: revise game reset logic after endGame() occurs
 function endGame() {
+  isPlaying = false
+  stopCountdown()
   hide(countdownBox)
-  //TO FIX: delay in removing correct and try again statuses
   hide(correct)
   hide(incorrect)
   show(gameOverBox)
   setElementValue(finalScoreValue, score)
   setElementValue(startResetButton, "Start Game")
-  isPlaying = false
+}
+function resetGame() {
+  isPlaying = true
+  score = 0
+  currentQuestion = 0
+  hide(gameOverBox)
+  show(countdownBox)
+  setElementValue(scoreValue, score)
+  switchStartResetButtonState()
+  startCountdown(30)
+  showQA(questions[currentQuestion])
+}
+function startGame() {
+  startResetButton.addEventListener("click", () => {
+    if (isPlaying) {
+      location.reload()
+    } else {
+      resetGame()
+    }
+  })
 }
 
-startResetButton.addEventListener("click", () => {
-  if (isPlaying) {
-    location.reload()
-  } else {
-    isPlaying = true
-    hide(gameOverBox)
-    setElementValue(scoreValue, score)
-    show(countdownBox)
-    startCountdown(30)
-    switchStartResetButtonState()
-    showQA(questions[currentQuestion])
-  }
-})
+startGame()
+
