@@ -98,6 +98,7 @@ function endGame() {
   setElementValue(finalScoreValue, score)
   setElementValue(startResetButton, "Start Game")
 }
+
 function resetGame() {
   isPlaying = true
   score = 0
@@ -109,6 +110,7 @@ function resetGame() {
   startCountdown(30)
   showQA(questions[currentQuestion])
 }
+
 function startGame() {
   startResetButton.addEventListener("click", () => {
     if (isPlaying) {
